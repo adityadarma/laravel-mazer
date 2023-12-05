@@ -21,4 +21,4 @@
 ### Credit
 Author Template on https://github.com/zuramai/mazer
 ### License
-Laravel Stisla is licensed under the MIT license. Enjoy!
+Laravel Mazer is licensed under the MIT license. Enjoy!
