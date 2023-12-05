@@ -49,6 +49,8 @@
         @yield('library_script')
 
         <!-- Page Specific JS File -->
+        <script src="{{ asset('assets/js/default.js') }}"></script>
+        <script src="{{ asset('assets/js/setup-ajax.js') }}"></script>
         @yield('custom_script')
     </body>
 </html>
