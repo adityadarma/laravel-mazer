@@ -59,13 +59,12 @@ function ajaxPostValidate(url, data, form, btn) {
         dataType: "json",
         contentType: false,
         processData: false,
-        oLanguage: {
-            sProcessing: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
-        },
         beforeSend: function () {
+            $(btn).prepend('<i class="bx bx-hourglass bx-spin font-size-16 align-middle mr-2"></i>');
             $(btn).attr("disabled", true);
         },
         complete: function () {
+            $(btn).find('i').remove();
             $(btn).attr("disabled", false);
         },
     }).fail(function (res) {
