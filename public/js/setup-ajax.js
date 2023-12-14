@@ -51,8 +51,7 @@ function ajaxPost(url, data) {
     });
 }
 
-function ajaxPostValidate(url, data, form, btn, text = "Sedang Diproses") {
-    var btn_before = $(btn).text();
+function ajaxPostValidate(url, data, form, btn) {
     return $.ajax({
         type: "post",
         url: url,
@@ -60,36 +59,26 @@ function ajaxPostValidate(url, data, form, btn, text = "Sedang Diproses") {
         dataType: "json",
         contentType: false,
         processData: false,
+        oLanguage: {
+            sProcessing: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+        },
         beforeSend: function () {
-            $(btn).attr("disabled", true).text(text);
+            $(btn).attr("disabled", true);
         },
         complete: function () {
-            $(btn).attr("disabled", false).text(btn_before);
+            $(btn).attr("disabled", false);
         },
     }).fail(function (res) {
-        if (res.status == 422) {
+        if (res.status === 422) {
             $.each(res.responseJSON.errors, function (i, v) {
                 let getName = getConvertedName(i);
-                $(form + ' input[name="' + getName + '"]').addClass(
-                    "is-invalid"
-                );
-                $(
-                    form + ' input[name="' + getName + '"] ~ .invalid-feedback'
-                ).html(v);
-                $(form + ' textarea[name="' + getName + '"]').addClass(
-                    "is-invalid"
-                );
-                $(
-                    form +
-                    ' textarea[name="' +
-                    getName +
-                    '"] ~ .invalid-feedback'
-                ).html(v);
-                if (
-                    $(form + ' select[name="' + getName + '"]').hasClass(
-                        "select2"
-                    )
-                ) {
+
+                // Input
+                $(form + ' input[name="' + getName + '"]').addClass("is-invalid");
+                $(form + ' input[name="' + getName + '"] ~ .invalid-feedback').html(v);
+
+                // Select
+                if ($(form + ' select[name="' + getName + '"]').hasClass("select2")) {
                     $(form + ' select[name="' + getName + '"]')
                         .addClass("is-invalid")
                         .addClass("error");
@@ -97,18 +86,17 @@ function ajaxPostValidate(url, data, form, btn, text = "Sedang Diproses") {
                         .parent()
                         .next()
                         .html(v);
-                } else {
-                    $(form + ' select[name="' + getName + '"]').addClass(
-                        "is-invalid"
-                    );
-                    $(
-                        form +
-                        ' select[name="' +
-                        getName +
-                        '"] ~ .invalid-feedback'
-                    ).html(v);
+                }
+                else {
+                    $(form + ' select[name="' + getName + '"]').addClass("is-invalid");
+                    $(form + ' select[name="' + getName + '"] ~ .invalid-feedback').html(v);
                 }
 
+                // Textarea
+                $(form + ' textarea[name="' + getName + '"]').addClass("is-invalid");
+                $(form + ' textarea[name="' + getName + '"] ~ .invalid-feedback').html(v);
+
+                // Input
                 $("input[name='" + getName + "']")
                     .keypress(function () {
                         $(this)
@@ -128,6 +116,8 @@ function ajaxPostValidate(url, data, form, btn, text = "Sedang Diproses") {
                             .text("Mohon lengkapi isian diatas");
                         $(this).removeClass("is-invalid");
                     });
+
+                // Select
                 $("select[name='" + getName + "']").change(function () {
                     if ($(this).hasClass("select2")) {
                         $(this)
@@ -135,13 +125,16 @@ function ajaxPostValidate(url, data, form, btn, text = "Sedang Diproses") {
                             .next(".invalid-feedback")
                             .text("Mohon lengkapi isian diatas");
                         $(this).removeClass("is-invalid").removeClass("error");
-                    } else {
+                    }
+                    else {
                         $(this)
                             .next(".invalid-feedback")
                             .text("Mohon lengkapi isian diatas");
                         $(this).removeClass("is-invalid");
                     }
                 });
+
+                // Textarea
                 $("textarea[name='" + getName + "']")
                     .keypress(function () {
                         $(this)
@@ -156,7 +149,8 @@ function ajaxPostValidate(url, data, form, btn, text = "Sedang Diproses") {
                         $(this).removeClass("is-invalid");
                     });
             });
-        } else {
+        }
+        else {
             Swal.fire({
                 title: "Gagal",
                 text: res.responseJSON.message,
@@ -182,25 +176,30 @@ function ajaxPostDataObject(url, data) {
 }
 
 function getConvertedName(key) {
-    var text = "";
-    var arrayName = key.split(".");
+    let text = "";
+    let arrayName = key.split(".");
 
     if (arrayName.length > 1) {
         arrayName.forEach(function (name, i) {
             if (i === 0) {
                 text += name;
-            } else {
+            }
+            else {
                 text += "[" + name + "]";
             }
         });
-    } else {
+    }
+    else {
         text = arrayName[0];
     }
     return text;
 }
 
 
-function sweetAlertDelete(url, tableId) {
+function sweetAlertDelete(
+    url,
+    tableId
+) {
     SwalMixin.mixin({
         customClass: {
             confirmButton: 'btn btn-success',
@@ -209,7 +208,7 @@ function sweetAlertDelete(url, tableId) {
         buttonsStyling: false,
     }).fire({
         title: 'Apakah kamu yakin?',
-        text: "Kamu akan menghapus data ini!",
+        text: 'Kamu akan menghapus data ini!',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonClass: 'me-2',
