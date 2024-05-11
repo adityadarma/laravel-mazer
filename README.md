@@ -20,5 +20,6 @@
 
 ### Credit
 Author Template on https://github.com/zuramai/mazer
+
 ### License
 Laravel Mazer is licensed under the MIT license. Enjoy!

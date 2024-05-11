@@ -24,22 +24,25 @@ class LaravelMazerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot(): void
-    {
-        $this->publish();
-    }
-
-    /**
      * Register services.
      *
      * @return void
      */
     public function register(): void
     {
-        $this->commands([LaravelMazerInstall::class]);
+        //
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publish();
+            $this->commands([LaravelMazerInstall::class]);
+        }
     }
 }
