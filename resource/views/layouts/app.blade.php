@@ -8,12 +8,13 @@
 
         <!-- General CSS Files -->
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-        <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.css') }}">
 
         <!-- CSS Libraries -->
         @yield('library_style')
 
         <!-- Template CSS -->
+        <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         @yield('custom_style')
     </head>
@@ -42,13 +43,15 @@
         @yield('modal')
 
         <!-- General JS Scripts -->
-        <script src="{{ asset('assets/js/app.js') }}"></script>
+        <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('assets/vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
         <!-- JS Libraies -->
         @yield('library_script')
 
         <!-- Page Specific JS File -->
+        <script src="{{ asset('assets/js/app.js') }}"></script>
         <script src="{{ asset('assets/js/default.js') }}"></script>
         <script src="{{ asset('assets/js/setup-ajax.js') }}"></script>
         @yield('custom_script')
